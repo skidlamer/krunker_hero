@@ -1,6 +1,6 @@
 {
   "name": "Kruner Hero",
-  "homepage_url": "http://localhost/",
+  "homepage_url": "https://github.com/skidlamer/krunker_hero/archive/master.zip",
   "version": "1.0.1",
   "manifest_version": 2,
   "description": "A krunker.io modification",
@@ -11,7 +11,7 @@
     "background"
   ],
   "web_accessible_resources": [
-    "oscillator10.js", "zip.js", "zip-ext.js", "game.js"
+    "oscillator.js", "zip.js", "zip-ext.js", "game.js"
   ],
   "browser_action": {
     "default_icon": "icon.png",
