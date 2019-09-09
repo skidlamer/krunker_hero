@@ -1,0 +1,23 @@
+{
+  "name": "Kruner Hero",
+  "homepage_url": "http://localhost/",
+  "version": "1.0.1",
+  "manifest_version": 2,
+  "description": "A krunker.io modification",
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "https://krunker.io/*",
+    "background"
+  ],
+  "web_accessible_resources": [
+    "oscillator10.js", "zip.js", "zip-ext.js", "game.js"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Krunker Hero"
+  },
+  "background": {
+    "scripts": ["hook.js"]
+  }
+}
