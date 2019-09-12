@@ -1,4 +1,5 @@
 const items = new Map();
+items.set('howler.min.js', 'https://cdnjs.cloudflare.com/ajax/libs/howler*')
 items.set('game.js', 'https://krunker.io/js/game*');
 items.set('oscillator.js', 'https://krunker.io/libs/oscillator*');
 items.set('zip-ext.js', 'https://krunker.io/libs/zip-ext.*');
