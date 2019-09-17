@@ -476,12 +476,15 @@ class Utilities {
             if (this.control.mouseDownL === 1) {
                 this.control.mouseDownL = 0;
             }
+			if (this.control.mouseDownR === 1) {
+                this.control.mouseDownR = 0;
+            }
             setTimeout(() => {
                 this.self.aimVal = 1;
-                this.world.players.resetAim();
                 this.settings.forceScope || this.self.weapon.name === "Sniper Rifle" || this.self.weapon.name === "Semi Auto" ? this.self.weapon.scope = 1 : delete this.self.weapon.scope;
-                this.settings.canShoot = true;
-            }, this.control.mouseDownR === 0 ? 0 : this.self.weapon.rate / 1.75);
+                this.world.players.resetAim();
+				this.settings.canShoot = true;
+            }, this.self.weapon.rate / 1.75);
         }
         const target = this.getTarget();
         if (target) {
