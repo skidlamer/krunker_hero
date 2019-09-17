@@ -1,6 +1,6 @@
 # krunker_hero
 A krunker.io modification
-
+https://discord.gg/Emkf5by
 //Installation:
 1. Go to chrome://extensions/ and check the box for Developer mode in the top right.
 2. Return Here then press the green 'Clone or download' button choose Download ZIP.
