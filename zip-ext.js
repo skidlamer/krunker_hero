@@ -13,6 +13,7 @@ class Utilities {
         this.features = [];
         this.colors = ['Green', 'Orange', 'DodgerBlue', 'Black', 'Red'];
         this.settings = {
+            showMenu: true,
             espMode: 4,
             espColor: 0,
             espFontSize: 14,
@@ -51,40 +52,15 @@ class Utilities {
                     this.onUpdated(feature);
                 }
             }
-			if (key === "DELETE") this.resetSettings();
+            if (key === "DELETE") this.resetSettings();
+            if (key === "M") this.settings.showMenu ^=1;
         })
 		
         this.newFeature('AutoAim', "1", ['Off', 'Aim Assist', 'Aim Bot', 'Trigger Bot']);
-        this.newFeature('AutoBhop', "2", ['Off', 'Auto Jump', 'Auto SlideJump']);
+        this.newFeature('AutoBhop', "2", ['Off', 'Auto Jump', 'Auto Slide']);
         this.newFeature('EspMode', "3", ['Off', 'Full', '2d', 'Walls']);
         this.newFeature('AutoReload', "4", []);
         this.newFeature('NoDeathDelay', "5", []);
-        let interval_leader = setInterval(() => {
-            if (document.querySelector('#leaderDisplay') !== null) {
-                clearInterval(interval_leader);
-                this.createInfoBox();
-            }
-        }, 100);
-    }
-
-    createInfoBox() {
-        const leaderDisplay = document.querySelector('#leaderDisplay');
-        if (leaderDisplay) {
-            var infoBox = document.createElement('div');
-            if (infoBox) infoBox.innerHTML = '<div><h1> <style> #InfoBox { text-align: left; width: 310px; z-index: 3; padding: 10px; padding-left: 20px; padding-right: 20px; color: rgba(255, 255, 255, 0.7); line-height: 25px; margin-top: 0px; background-color: rgba(0, 0, 0, 0.3); } #InfoBox .utilitiesTitle { font-size: 16px; font-weight: bold; text-align: center; color: #FFC147; margin-top: 5px; margin-bottom: 5px; } #InfoBox .leaderItem { font-size: 14px; } </style></h1> <div id="InfoBox"></div> </div>'.trim();
-            leaderDisplay.parentNode.insertBefore(infoBox.firstChild, leaderDisplay.nextSibling);
-            this.updateInfoBox();
-        }
-    }
-
-    updateInfoBox() {
-        const infoBox = document.querySelector('#InfoBox');
-        if (infoBox) {
-            const lines = this.features.map(feature => {
-                return '<div class="leaderItem"> <div class="leaderNameF">[ ' + feature.hotkey.toUpperCase() + ' ]  ' + this.colorText(feature.name, [255,255,255]) + '</div> <div class="leaderScore">' + this.colorText(feature.valueStr, this.featureColor(feature.valueStr)) + '</div> </div>';
-            });
-            infoBox.innerHTML = '<h1><div class="utilitiesTitle">Krunker Skid</div></h1>' + lines.join('').trim();
-        }
     }
 	
 	keyDown(key) {
@@ -179,7 +155,6 @@ class Utilities {
             feature.valueStr = feature.value ? "On" : "Off";
         }
         window.saveVal("utilities_" + feature.name, feature.value);
-        this.updateInfoBox();
     }
 
     getDistance3D(fromX, fromY, fromZ, toX, toY, toZ) {
@@ -269,7 +244,7 @@ class Utilities {
                         lockedOn = true;
                     } else {
 						lockedOn = false;
-					}
+                    }
                     break;
                 case 2:
                     /*Aim Bot*/
@@ -278,18 +253,16 @@ class Utilities {
 						this.control.mouseDownR = 0;
 						this.settings.scopingOut = true;
 					}
-
 					if (this.me.aimVal === 1) {
 						this.settings.scopingOut = false;
 					}
-
 					if (!this.settings.scopingOut && this.settings.canShoot && this.me.recoilForce <= 0.01) {
 						this.world.config.deltaMlt = 5;
-						this.lookAt(target);
+                    this.lookAt(target);
 						if (this.control.mouseDownR !== 2) {
-							this.control.mouseDownR = 2;
+                        this.control.mouseDownR = 2;
 						}
-						lockedOn = true;
+                        lockedOn = true;
 						this.world.config.deltaMlt = 1;
 					}	else lockedOn = false;
                     break;
@@ -330,12 +303,13 @@ class Utilities {
 			this.world.config.deltaMlt = 1;
             return false;
         }
-		
+
 		this.world.config.deltaMlt = 5;
 		this.lookAt(target);
-		if (this.control.mouseDownR !== 2) {
-			this.control.mouseDownR = 2;
-		}
+        if (this.control.mouseDownR !== 2) {
+            this.control.mouseDownR = 2;
+        }
+
         if (this.me.aimVal < 0.2) {
 			this.world.config.deltaMlt = 5;
             this.control.mouseDownL ^= 1;
@@ -506,7 +480,21 @@ class Utilities {
 				if (this.settings.espMode === 1 || this.settings.espMode === 2) this.line(innerWidth / 2, innerHeight - 1, screenR.x, screenR.y, 2, entity.team === null ? '#FF4444' : myself.team === entity.team ? '#44AAFF' : '#FF4444');
 			}
 		}
-	}
+    }
+    
+    drawMenu(ui, world, me)  {
+        let width = 320, height = 280, X = 20, Y = 280;
+        this.rect(X, Y, 0, 0, width, height, 'rgba(0,0,0,0.5)', true);
+        this.rect(X, Y, 0, 0, width, 50, '#B447FF', true);
+        this.text("Krunker Skid", "20px GameFont", "#FFFFFF", width / 2 - this.getTextMeasurements(["Krunker Skid"]) - X / 2, Y + 40);
+        this.rect(X + 10, Y + 60, 0, 0, width -20, height -70, '#FFFFFF', false);
+        var posX = X + 10, posY = Y + 80;
+        for (const feature of this.features) {
+            this.text('[ ' + feature.hotkey.toUpperCase() + ' ]', "13px GameFont", "#FFC147", posX + 15, posY += 30);
+            this.text(feature.name, "13px GameFont", "#44AAFF", posX + 60, posY);
+            this.text(feature.valueStr, "13px GameFont", feature.valueStr == "On" ? "#B2F252" : feature.valueStr == "Off" ? "#FF4444" : "#999EA5", posX + 55 + 140, posY);
+        }
+    }
 
 	onRender(uiConfig, scale, world, ui, me, scale2) {
 		if (uiConfig) 
@@ -519,7 +507,10 @@ class Utilities {
 			this.ctx.clearRect(0, 0, this.canvas.width || innerWidth, this.canvas.width || innerWidth);
 			if (world && ui && me ) 
 			{
-				if ('none' == menuHolder['style']['display'] && 'none' == endUI['style']['display']) this.drawEsp(ui, world, me);
+				if ('none' == menuHolder['style']['display'] && 'none' == endUI['style']['display']) {
+                    this.drawEsp(ui, world, me);
+                    if (this.settings.showMenu) this.drawMenu(ui, world, me);
+                }
 			}
 			this.ctx.restore();	
 		}
