@@ -61,6 +61,7 @@ class Utilities {
         this.newFeature('EspMode', "3", ['Off', 'Full', '2d', 'Walls']);
         this.newFeature('AutoReload', "4", []);
         this.newFeature('NoDeathDelay', "5", []);
+        this.newFeature('SkidSettings', "6", []);
     }
 	
 	keyDown(key) {
@@ -105,6 +106,9 @@ class Utilities {
                 case 'EspMode':
                     this.settings.espMode = feature.value;
                     break;
+                case 'SkidSettings':
+                        if (feature.value) new Map([ ["fov", 85], ["fpsFOV", 85], ["weaponBob", 3], ["weaponLean", 6], ["weaponOffX", 2], ["weaponOffY", 2], ["weaponOffZ", 2] ]).forEach(function(value, key, map) { window.setSetting(key, value) });
+                        break;
             }
         }
     }
@@ -228,7 +232,6 @@ class Utilities {
                 this.settings.canShoot = true;
             }, this.me.weapon.rate / 1.85);
         }
-		const settings = new Map([ ["fov", 85], ["fpsFOV", 85], ["weaponBob", 3], ["weaponLean", 6], ["weaponOffX", 2], ["weaponOffY", 2], ["weaponOffZ", 2] ]).forEach(function(value, key, map) { window.setSetting(key, value) });
         if (target) {
             let playerDist = (Math.round(this.getDistance(this.me, target)) / 10).toFixed(0);
             const currentXDR = this.control.xDr;
@@ -488,7 +491,7 @@ class Utilities {
         this.rect(X, Y, 0, 0, width, 50, '#B447FF', true);
         this.text("Krunker Skid", "20px GameFont", "#FFFFFF", width / 2 - this.getTextMeasurements(["Krunker Skid"]) - X / 2, Y + 40);
         this.rect(X + 10, Y + 60, 0, 0, width -20, height -70, '#FFFFFF', false);
-        var posX = X + 10, posY = Y + 80;
+        var posX = X + 10, posY = Y + 65;
         for (const feature of this.features) {
             this.text('[ ' + feature.hotkey.toUpperCase() + ' ]', "13px GameFont", "#FFC147", posX + 15, posY += 30);
             this.text(feature.name, "13px GameFont", "#44AAFF", posX + 60, posY);

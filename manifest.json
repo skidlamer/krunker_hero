@@ -1,7 +1,7 @@
 {
   "name": "Kruner Hero",
   "homepage_url": "https://github.com/skidlamer/krunker_hero/archive/master.zip",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "manifest_version": 2,
   "description": "A krunker.io modification",
   "permissions": [
