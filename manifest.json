@@ -1,17 +1,18 @@
 {
   "name": "Kruner Hero",
   "homepage_url": "https://github.com/skidlamer/krunker_hero/archive/master.zip",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "manifest_version": 2,
   "description": "A krunker.io modification",
   "permissions": [
     "webRequest",
     "webRequestBlocking",
-    "https://krunker.io/*",
+    "*://krunker.io/*",
+    "*://matchmaker.krunker.io/*",
     "background"
   ],
   "web_accessible_resources": [
-    "oscillator.js", "zip.js", "zip-ext.js", "game.js"
+    "zip.js", "zip-ext.js"
   ],
   "browser_action": {
     "default_icon": "icon.png",
