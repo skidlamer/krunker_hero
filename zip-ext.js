@@ -62,6 +62,7 @@ class Utilities {
         this.newFeature('AutoReload', "4", []);
         this.newFeature('NoDeathDelay', "5", []);
         this.newFeature('SkidSettings', "6", []);
+        this.server.voiceChatMaxLength = 4;
     }
 	
 	keyDown(key) {
@@ -485,7 +486,7 @@ class Utilities {
 		}
     }
     
-    drawMenu(ui, world, me)  {
+    drawMenu()  {
         let width = 320, height = 280, X = 20, Y = 280;
         this.rect(X, Y, 0, 0, width, height, 'rgba(0,0,0,0.5)', true);
         this.rect(X, Y, 0, 0, width, 50, '#B447FF', true);
@@ -507,12 +508,12 @@ class Utilities {
 			this.canvas = uiConfig.canvas || document.getElementById("game-overlay");
 			this.ctx = this.canvas.getContext("2d");
 			this.ctx.save();
-			this.ctx.clearRect(0, 0, this.canvas.width || innerWidth, this.canvas.width || innerWidth);
+			this.ctx.clearRect(0, 0, this.canvas.width || innerWidth, this.canvas.height || innerHeight);
 			if (world && ui && me ) 
 			{
 				if ('none' == menuHolder['style']['display'] && 'none' == endUI['style']['display']) {
                     this.drawEsp(ui, world, me);
-                    if (this.settings.showMenu) this.drawMenu(ui, world, me);
+                    if (this.settings.showMenu) this.drawMenu();
                 }
 			}
 			this.ctx.restore();	
